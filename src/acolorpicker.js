@@ -1136,21 +1136,25 @@ function from(selector, options) {
     };
     return pickers;
 }
+// Wrapped in process check. execute for tests/dev only.
+if (process.env.NODE_ENV !== 'production') {
 
-if (typeof window !== 'undefined') {
-    // solo in ambiente browser inserisco direttamente nella pagina html il css
-    //  per sicurezza controllo che non sia già presente
-    if (!document.querySelector('head>style[data-source="a-color-picker"]')) {
-        // eslint-disable-next-line global-require,  no-undef
-        const css = require('./acolorpicker.css').toString();
-        const style = document.createElement('style');
-        style.setAttribute('type', 'text/css');
-        style.setAttribute('data-source', 'a-color-picker');
-        style.innerHTML = css;
-        // TODO: verificare che esista <head>
-        document.querySelector('head').appendChild(style);
-    }
+  if (typeof window !== 'undefined') {
+      // solo in ambiente browser inserisco direttamente nella pagina html il css
+      //  per sicurezza controllo che non sia già presente
+      if (!document.querySelector('head>style[data-source="a-color-picker"]')) {
+          // eslint-disable-next-line global-require,  no-undef
+          const css = require('./acolorpicker.css').toString();
+          const style = document.createElement('style');
+          style.setAttribute('type', 'text/css');
+          style.setAttribute('data-source', 'a-color-picker');
+          style.innerHTML = css;
+          // TODO: verificare che esista <head>
+          document.querySelector('head').appendChild(style);
+      }
+  }
 }
+
 
 export {
     createPicker,
